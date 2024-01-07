@@ -9,8 +9,7 @@ packages = [{include = "slack_bot"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 python-dotenv = "^1.0.0"
-slack-sdk = "^3.26.1"
-flask = "^3.0.0"
+slack-bolt = "^1.18.1"
 
 
 [build-system]
