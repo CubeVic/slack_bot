@@ -1,0 +1,17 @@
+name: Auto-Assign PR Creator
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto_assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign PR Creator
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/:owner/:repo/issues/:issue_number/assignees
+          issue_number: ${{ github.event.pull_request.number }}
+          assignees: ${{ github.event.pull_request.user.login }}
+          token: ${{ secrets.GITHUB_TOKEN }}
