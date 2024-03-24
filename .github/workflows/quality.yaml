@@ -25,19 +25,19 @@ jobs:
       id: pre-commit-result
       run: echo "::set-output name=result::$(if [ -s .pre-commit/pre-commit.log ]; then cat .pre-commit/pre-commit.log; else echo 'Pre-commit checks passed successfully.'; fi)"
 
-  summary:
-    runs-on: ubuntu-latest
-    needs:
-      - pre-commit
-    steps: 
-    # Publish comment with pre-commit result
-    - name: Publish Pre-commit Result
-      if: always()
-      uses: actions/github-script@v4
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const result = "${{ steps.pre-commit-result.outputs.result }}";
+  # summary:
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - pre-commit
+  #   steps: 
+  #   # Publish comment with pre-commit result
+  #   - name: Publish Pre-commit Result
+  #     if: always()
+  #     uses: actions/github-script@v4
+  #     with:
+  #       github-token: ${{ secrets.GITHUB_TOKEN }}
+  #       script: |
+  #         const result = "${{ steps.pre-commit-result.outputs.result }}";
           const context = github.context;
           const issue_number = context.payload.pull_request.number;
           await github.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number, body: result });
